@@ -8,6 +8,10 @@
     "clean": "gulp clean",
     "test": "start"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:baihefeng/aGame.git"
+  },
   "author": "neo.wthie",
   "license": "ISC",
   "devDependencies": {
