@@ -1,0 +1,27 @@
+{
+  "name": "tslearn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "clean": "gulp clean",
+    "test": "start"
+  },
+  "author": "neo.wthie",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "browserify": "^14.4.0",
+    "copy": "^0.3.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-less": "^3.3.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-typescript": "^3.1.7",
+    "gulp-watch": "^4.3.11",
+    "tsify": "^3.0.1",
+    "typescript": "^2.3.4",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}

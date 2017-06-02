@@ -1,0 +1,9 @@
+{
+    "files": [
+        "src/ts/*.ts" //中间不可用**
+    ],
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "target": "es5"
+    }
+}
