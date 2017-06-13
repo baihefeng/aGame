@@ -38,7 +38,7 @@ gulp.task('less',function(){
 });
 //复制html文件到dist
 gulp.task('copy', function (callback) {
-    cp(['src/*.html','src/**/*.html','src/lib/*.*','src/js/*.*'], 'dist', callback);
+    cp(['src/*.html','src/**/*.html','src/lib/*.*','src/js/*.*','src/favicon.ico'], 'dist', callback);
 });
 //ts文件转换
 gulp.task('ts', function () {
