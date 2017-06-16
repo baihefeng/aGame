@@ -13,21 +13,34 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     tsify = require('tsify'),
     source = require('vinyl-source-stream'),
+    uglify = require('gulp-uglify'),
+    sourcemaps = require('gulp-sourcemaps'),
+    buffer = require('vinyl-buffer'),
+    watchify = require("watchify"),
+    gutil = require("gulp-util"),
     bserver = require('browser-sync');
-//browserify
-gulp.task('build',function(){
-    return browserify({
-        basedir: './src/',
-        debug: true,
-        entries: ['ts/test.ts'],
-        cache: {},
-        packageCache: {}
-    })
-        .plugin(tsify)
+
+var watchedBrowserify = watchify(browserify({
+    basedir: '.',
+    debug: true,
+    entries: ['src/ts/main.ts'],
+    cache: {},
+    packageCache: {}
+}).plugin(tsify));
+function bundle() {
+    watchedBrowserify
+        .transform('babelify', {
+            presets: ['es2015'],
+            extensions: ['.ts']
+        })
         .bundle()
-        .pipe(source('bundle.js'))
+        .pipe(source('build.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest("dist/js"));
-});
+}
 //less编译
 gulp.task('less',function(){
     return gulp.src('src/less/*.less')
@@ -56,7 +69,7 @@ gulp.task('changes',function(){
             .pipe(gulp.dest(n));
     });
     gulp.watch(['src/less/*.less'],['less']);
-    gulp.watch('src/**/*.ts', ['ts']);
+    //gulp.watch('src/**/*.ts', ['build']);
 });
 //clean
 gulp.task('clean',function(){
@@ -64,6 +77,8 @@ gulp.task('clean',function(){
        .pipe(clean())
 });
 
+//browserify
+gulp.task('build',['copy'],bundle);
 /**
  * 构建browser-sync,就是server
  * Browser sync options
@@ -97,4 +112,7 @@ var bsInit = {
 gulp.task('serve', function() {
     bserver(bsInit);
 });
-gulp.task('default',['copy','build','serve','changes']);
+gulp.task('default',['build','less','copy','serve','changes']);
+
+watchedBrowserify.on("update", bundle);
+watchedBrowserify.on("log", gutil.log);

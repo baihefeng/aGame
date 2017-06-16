@@ -4,8 +4,10 @@
 
 # IntelliJ project files
 .idea
+*.map
 *.iml
 node_modules
 dist
+package-lock.json
 out
 gen
